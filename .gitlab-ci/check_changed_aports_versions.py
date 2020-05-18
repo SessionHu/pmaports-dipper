@@ -17,6 +17,9 @@ import pmb.parse.version
 import pmb.helpers.logging
 
 
+ERR_PKGREL_NONZERO = 1
+ERR_PKGVER_NOT_INCREMENTED = 2
+
 def get_package_version(args, package, revision, check=True):
     # Redirect stderr to /dev/null, so git doesn't complain about files not
     # existing in master for new packages
@@ -55,35 +58,29 @@ def version_compare_operator(result):
     raise RuntimeError("Unexpected version_compare_operator input: " + result)
 
 
-def exit_with_error_message():
-    print()
-    print("ERROR: Modified package(s) don't have an increased version or a")
-    print("new package has a nonzero pkgrel!")
-    print()
-    print("This can happen if you added a new package with a nonzero")
-    print("pkgrel, or if you did not change the pkgver/pkgrel")
-    print("variables in the APKBUILDs. Or you did change them, but the")
-    print("packages have been updated in the official master branch, and now")
-    print("your versions are not higher anymore.")
-    print()
-    print("Your options:")
-    print("a) If you made changes to the packages, and did not increase the")
-    print("   pkgrel/pkgver: increase them now, and force push your branch.")
-    print("   => https://postmarketos.org/howto-bump-pkgrel-pkgver")
-    print("b) If you had already increased the package versions, rebase on")
-    print("   master, increase the versions again and then force push:")
-    print("   => https://postmarketos.org/rebase")
-    print("c) If you made a change, that does not require rebuilding the")
-    print("   packages, such as only changing the arch=... line: you can")
-    print("   disable this check by adding '[ci:skip-vercheck]' to the")
-    print("   latest commit message, then force push.")
-    print()
-    print("Thank you and sorry for the inconvenience.")
+def print_error(error):
+    if error == ERR_PKGREL_NONZERO:
+        print('''
+        ERROR: pkgrel MUST be 0 for all new aports, you can fix this
+        by updating your apkbuild and using git commit --amend followed
+        by a force push.
+        ''')
+    elif error == ERR_PKGVER_NOT_INCREMENTED:
+        print('''
+        ERROR: You must increase the pkgver for updated packages, fix this
+        and then force push. You may need to rebase on master first.
+        (see https://postmarketos.org/rebase)
+
+        If your change doesn't require rebuilding the packages (e.g. only the
+        arch= line was changed) then add '[ci:skip-vercheck]' to the latest
+        commit with git commit --amend.
+        ''')
+    
     exit(1)
 
 
 def check_versions(args, packages):
-    error = False
+    error = 0
 
     # Get relevant commits: compare HEAD against upstream/master or HEAD~1
     # (the latter if this CI check is running on upstream/master). Note that
@@ -105,7 +102,7 @@ def check_versions(args, packages):
         if not master:
             if head.rpartition('r')[2] != "0":
                 print(f"- {package}: {head} (HEAD) (new package) [ERROR]")
-                error = True
+                error = ERR_PKGREL_NONZERO
             else:
                 print(f"- {package}: {head} (HEAD) (new package)")
             continue
@@ -113,7 +110,7 @@ def check_versions(args, packages):
         # Compare head and master versions
         result = pmb.parse.version.compare(head, master)
         if result != 1:
-            error = True
+            error = ERR_PKGVER_NOT_INCREMENTED
 
         # Print result line ("- hello-world: 1-r2 (HEAD) > 1-r1 (HEAD~1)")
         formatstr = "- {}: {} (HEAD) {} {} ({})"
@@ -123,7 +120,7 @@ def check_versions(args, packages):
         print(formatstr.format(package, head, operator, master, commit))
 
     if error:
-        exit_with_error_message()
+        exit_with_error_message(error)
 
 
 if __name__ == "__main__":
