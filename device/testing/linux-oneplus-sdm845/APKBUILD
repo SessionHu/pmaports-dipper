@@ -3,7 +3,7 @@
 
 _flavor="oneplus-sdm845"
 pkgname=linux-$_flavor
-pkgver=5.10
+pkgver=5.11_rc4
 pkgrel=0
 pkgdesc="Kernel fork for OnePlus SDM845 devices, close to mainline"
 arch="aarch64"
@@ -14,7 +14,7 @@ options="!strip !check !tracedeps pmb:cross-native"
 makedepends="bison findutils flex installkernel openssl-dev perl"
 
 _config="config-$_flavor.$arch"
-_commit="ccb798850a85a6a9c8c70e02f0bf77af06c90d60"
+_commit="695613aea84a468768bdc32181dfc21a086feded"
 
 # Source
 source="
@@ -53,5 +53,5 @@ package() {
 		INSTALL_DTBS_PATH="$pkgdir/usr/share/dtb"
 }
 
-sha512sums="93c0aa227f441a234e910ed3052fa83fd9d4d77eb044b72769129f0ca82d6a140426029b4541783e1b8c4abe5bd8b476cd53119528a5f18448fe2889bce40ed0  sdm845-linux-ccb798850a85a6a9c8c70e02f0bf77af06c90d60.tar.gz
-828c76ee54e8d078be7cc371d34ab87c32929f096f70bcd3f69c2e42d748aec0446499fefbdf779fdfb05d8a779745222865674ad371759100ee36245f533202  config-oneplus-sdm845.aarch64"
+sha512sums="8b71779bec8601685b8a85eb45daf40cf66cd484ee602a30299bf4fd858231635be1b97fd6c78e5b827675a446ddbcb8c2a1cb6f192feaaeff315e443061d542  sdm845-linux-695613aea84a468768bdc32181dfc21a086feded.tar.gz
+4751f87ca9e9d9c333487bbede98cc620d9d5074b011bcf47cd9d5ea18da64f8a9d94a440bd2f0282ad7609f26f8a75a9116e21b1e1146f8b17a343e4162689b  config-oneplus-sdm845.aarch64"
