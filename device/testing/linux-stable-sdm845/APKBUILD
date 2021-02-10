@@ -1,0 +1,60 @@
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
+# Stable Linux kernel with patches for SDM845 devices
+# Supports:
+# * OnePlus 6/T (enchilada/fajita)
+# * Xiaomi Pocophone F1 (beryllium)
+
+_flavor="stable-sdm845"
+pkgname=linux-$_flavor
+pkgver=5.10.12
+pkgrel=0
+pkgdesc="Kernel fork for SDM845 devices, merged with Linux stable."
+arch="aarch64"
+_carch="arm64"
+url="https://gitlab.com/sdm845-mainline/sdm845-linux"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="bison findutils flex installkernel openssl-dev perl"
+
+_config="config-$_flavor.$arch"
+_commit="a8dc68ace7de3165afa5ad2f8209cfa07fa618a2"
+
+# Source
+source="
+	sdm845-linux-$_commit.tar.gz::https://gitlab.com/sdm845-mainline/sdm845-linux/-/archive/$_commit/sdm845-linux-$_commit-sdm845.tar.gz
+	$_config
+"
+builddir="$srcdir/sdm845-linux-$_commit"
+
+prepare() {
+	default_prepare
+	mkdir -p "$srcdir"/build
+	cp -v "$srcdir"/$_config "$srcdir"/build/.config
+	make -C "$builddir" O="$srcdir"/build ARCH="$_carch" \
+		olddefconfig
+}
+
+build() {
+	cd "$srcdir"/build
+	unset LDFLAGS
+	make ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+}
+
+package() {
+	cd "$srcdir/build/arch/$_carch/boot"
+
+	install -D "$srcdir/build/include/config/kernel.release" \
+		"$pkgdir/usr/share/kernel/$_flavor/kernel.release"
+
+	cd "$srcdir"/build
+	mkdir -p "$pkgdir"/boot
+	make zinstall modules_install dtbs_install \
+		ARCH="$_carch" \
+		INSTALL_PATH="$pkgdir"/boot/ \
+		INSTALL_MOD_PATH="$pkgdir" \
+		INSTALL_DTBS_PATH="$pkgdir/usr/share/dtb"
+}
+
+sha512sums="cd4d85888aba39f012934ac6179c6d5cd156ca575b87665f2c2a06182ad42cc3bd5a6fbe263ac241717a5b6f32a81018b332f55cdc114f0b129f33d887181441  sdm845-linux-a8dc68ace7de3165afa5ad2f8209cfa07fa618a2.tar.gz
+4ce8492b4d8a8477930f665f4228e6f265d2136a8668c91e0cb9cc7646271be76e1754f4294eded225fede112a63ad85b9478032930a2bfa2c9352edd5ba9848  config-stable-sdm845.aarch64"
