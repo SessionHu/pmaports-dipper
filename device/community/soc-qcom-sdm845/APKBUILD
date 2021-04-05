@@ -1,21 +1,24 @@
 # Maintainer: Caleb Connolly (kalube) <caleb@connolly.tech>
 pkgname=soc-qcom-sdm845
 pkgdesc="Common package for Qualcomm SDM845 devices"
-pkgver=3
+pkgver=4
 pkgrel=1
 url="https://postmarketos.org"
 license="BSD-3-Clause"
 arch="aarch64"
 options="!check !archcheck !tracedeps"
-depends="mesa-dri-gallium"
+depends="mesa-dri-gallium mesa-egl"
 subpackages="
 	$pkgname-nonfree-firmware:nonfree_firmware
 	$pkgname-ucm
+	$pkgname-initramfs-firmware:initramfs_firmware
 "
 
 _ucm_commit="9e0051807472822bc4090a2d03ab5dacd7787ab8"
 source="
 	alsa-ucm-conf-$_ucm_commit.tar.gz::https://gitlab.com/sdm845-mainline/alsa-ucm-conf/-/archive/$_ucm_commit/alsa-ucm-conf-$_ucm_commit.tar.gz
+	30-gpu-firmware.files
+	31-gpu-mesa-libs.files
 	90-feedbackd-pmi8998.rules
 "
 
@@ -40,5 +43,21 @@ ucm() {
 	cp -r "$srcdir/alsa-ucm-conf-$_ucm_commit"/ucm2 "$subpkgdir"/usr/share/alsa/
 }
 
+initramfs_firmware() {
+	pkgdesc="Files to be included in the initramfs to support osk-sdl"
+	depends="linux-firmware-qcom"
+	install_if="$pkgname-nonfree-firmware"
+	mkdir "$subpkgdir"
+
+	install -Dm644 "$srcdir/30-gpu-firmware.files" \
+		"$subpkgdir/etc/postmarketos-mkinitfs/files/30-gpu-firmware.files"
+
+	install -Dm644 "$srcdir/31-gpu-mesa-libs.files" \
+		"$subpkgdir/etc/postmarketos-mkinitfs/files/31-gpu-mesa-libs.files"
+}
+
+
 sha512sums="3af38c56d2b591c855516be5bf30f71623cb20053191d4324f9896c7d5f17661e93d95e6c682bcd56d0dd4c53374b349c0460c21b6652b737a2d98abe3b954d0  alsa-ucm-conf-9e0051807472822bc4090a2d03ab5dacd7787ab8.tar.gz
+ee2efa2a26a45abb86247068877f2e977126357e8048ca41e98554917d393bff23e000de6e831a1b435e3304c31e237192f5d9d772c08e59cb29ace37296af74  30-gpu-firmware.files
+0e272c638bae0e3e347738defeb537887ca0cb41e26729d0d213f014b09d585a95524b3b6c06a742b6c8e36971fecdf6d5d148a95fe9f2d9f278c1275e293995  31-gpu-mesa-libs.files
 ea3c7f9664eb9be2ffb6879db044b44cd826747b73c6527d54d79102e58a44e1b32d08d0b1b261329eae43d6a30bc8ef80d89b1d63af1c74ba5dc66ac57911d7  90-feedbackd-pmi8998.rules"
