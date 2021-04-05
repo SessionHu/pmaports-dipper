@@ -3,7 +3,7 @@
 
 pkgname=device-oneplus-enchilada
 pkgdesc="OnePlus 6"
-pkgver=0.3
+pkgver=0.4
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
@@ -34,5 +34,5 @@ phosh() {
 		"$subpkgdir"/etc/phosh/rootston.ini
 }
 
-sha512sums="98b7861dc862b740df65ea2abb0301c9cb0c0cd8b9324acfb095b3c6dd8d75f927a71cb90f1df85000386c4cc5f63b14e0ff361134ee141707d158f7c218cc3b  deviceinfo
+sha512sums="8b55660a27bb91210a9f130333ead8f583e9afc94bda63523c82fe0ef36e8abb71daa2686d73ca6735577c7ebe2890a2a4bc0949616e9d105dd29c6ffe9a0114  deviceinfo
 035f97e328ff9f976b082e66b97f76036cdee9825f3022471c7c5d371291cc4b5bd5c18196cd49f4cd9ad6390abe691b506de3b221e3c122433d5620e3b3c4c9  rootston.ini"
