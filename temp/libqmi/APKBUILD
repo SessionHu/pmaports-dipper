@@ -1,0 +1,44 @@
+# Forked from Alpine INSERT-REASON-HERE (CHANGEME!)
+
+pkgname=libqmi
+pkgver=1.29.4
+pkgrel=0
+pkgdesc="QMI modem protocol helper library"
+url="https://www.freedesktop.org/wiki/Software/libqmi"
+arch="all"
+license="GPL-2.0-or-later AND LGPL-2.1-or-later"
+makedepends="glib-dev gtk-doc libgudev-dev libmbim-dev libqrtr-glib-dev
+	linux-headers python3"
+subpackages="
+	$pkgname-dev
+	$pkgname-doc
+	$pkgname-bash-completion
+	"
+source="https://gitlab.freedesktop.org/aleksm/libqmi/-/archive/aleksander/profiles/libqmi-aleksander-profiles.tar.gz"
+
+builddir="$srcdir"/libqmi-aleksander-profiles
+
+build() {
+	NOCONFIGURE=1 ./autogen.sh
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static \
+		--enable-mbim-qmux \
+		--enable-qrtr \
+		--enable-gtk-doc
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="c457af47a18c7476322613c88c796f769183e6beb8230fffb9ccb91158e64510e8b0bbf6ca2e70c4ee56ab048927947bdcd966c54ee1d1b2b1e733ca62b02bcb  libqmi-aleksander-profiles.tar.gz"

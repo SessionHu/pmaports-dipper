@@ -1,0 +1,37 @@
+# Forked from Alpine INSERT-REASON-HERE (CHANGEME!)
+
+pkgname=libqrtr-glib
+pkgver=1.1.0
+pkgrel=0
+pkgdesc="Qualcomm IPC Router protocol helper library"
+url="https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib"
+arch="all"
+license="LGPL-2.1-or-later"
+makedepends="glib-dev gtk-doc linux-headers autoconf-archive automake libtool"
+subpackages="$pkgname-dev $pkgname-doc"
+source="https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib/-/archive/master/libqrtr-glib-master.tar.gz"
+
+builddir="$srcdir"/libqrtr-glib-master
+
+build() {
+	NOCONFIGURE=1 ./autogen.sh
+	./configure \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--prefix=/usr \
+		--sysconfdir=/etc \
+		--localstatedir=/var \
+		--disable-static \
+		--enable-gtk-doc
+	make
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="098f56dc43d7607aa06e5ba80dcec406b4f99bce2c9bb5dcaa555f1bc59ed1661fa6fb75567ac29de1fbe108919bb2bdafcb6a9f8e573c2b23087425ea0ad5c9  libqrtr-glib-master.tar.gz"
