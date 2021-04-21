@@ -1,0 +1,27 @@
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
+pkgname=postmarketos-ab-recovery-installer
+pkgver=1.0.0
+pkgrel=0
+pkgdesc="A new simple recovery installer with support for A/B devices"
+replaces="postmarketos-android-recovery-installer"
+url="https://gitlab.com/sdm845-mainline/pmos-installer"
+arch="all"
+license="GPL-3.0-or-later"
+depends="busybox-extras lddtree cryptsetup multipath-tools device-mapper parted util-linux zip e2fsprogs tar"
+source="https://gitlab.com/sdm845-mainline/pmos-installer/-/archive/$pkgver/postmarketos-android-recovery-installer-$pkgver.tar.gz"
+options="!check" # No tests
+
+meta_inf="META-INF/com/google/android"
+
+package() {
+	install -Dm755 build-flashable-zip.sh \
+		"$pkgdir"/sbin/build-flashable-zip
+	install -Dm755 makeinstaller.sh \
+		"$pkgdir"/var/lib/postmarketos-ab-recovery-installer/makeinstaller.sh
+	install -Dm644 update-binary \
+		"$pkgdir"/var/lib/postmarketos-ab-recovery-installer/"$meta_inf"/update-binary
+	install -Dm644 update-script \
+		"$pkgdir"/var/lib/postmarketos-ab-recovery-installer/"$meta_inf"/update-script
+}
+
+sha512sums="8afeaee69dea8bfd06b05214537863838ebc70df2025cded5a953652358ddf81f951b3fd184fb8c0d90fa94e73b23c66ab13c6fc2f107d4383b5d77c57315aa9  postmarketos-android-recovery-installer-1.0.0.tar.gz"
