@@ -20,10 +20,10 @@ subpackages="
 	$pkgname-openrc
 	$pkgname-bash-completion
 	"
-source="https://gitlab.freedesktop.org/aleksm/ModemManager/-/archive/aleksander/assume-qmapv4/ModemManager-aleksander-assume-qmapv4.tar.gz
+source="https://gitlab.freedesktop.org/kalube/ModemManager/-/archive/caleb/hacking-qmi/ModemManager-caleb-hacking-qmi.tar.gz
 	$pkgname.rules
 	$pkgname.initd"
-builddir="$srcdir"/ModemManager-aleksander-assume-qmapv4
+builddir="$srcdir"/ModemManager-caleb-hacking-qmi
 
 build() {
 	NOCONFIGURE=1 ./autogen.sh
@@ -81,7 +81,6 @@ EOF
 check() {
 	make check
 }
-
-sha512sums="b1e98eab8907dcfef554c68fc47147e4153c74db5ad08ada660a64562a887a593626e2e63594b8e16dab0ebf24f85eaeae9eace012def503b007688d45f275da  ModemManager-aleksander-assume-qmapv4.tar.gz
+sha512sums="68c91bac43f981f8e25bab66f202d45b4d9c1937e7788e13ce12329921829fa6598ebaa6f58610acd3017107aa0a241d7fc714f8fd6423d2a7700cd6a6caef4b  ModemManager-caleb-hacking-qmi.tar.gz
 6fab86c27502b29be0c6610d835a3249a4a81993eb986cff2c3ea9393fadd3f693ba4bb0532ae0e50a83d359559511859dd05f7ea2f0cb52839f535a7e49f8a0  modemmanager.rules
 9f74a2473b9cc7be42a467809639f5720ab251d13f29f8bbd4fd9a13edb80c10c5ee50fbe50819bfe67f231805b92f007c3e7403c46ab998dc843e1f9549659b  modemmanager.initd"
