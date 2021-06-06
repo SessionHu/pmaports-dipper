@@ -1,8 +1,8 @@
 # Maintainer: Caleb Connolly (kalube) <caleb@connolly.tech>
 pkgname=soc-qcom-sdm845
 pkgdesc="Common package for Qualcomm SDM845 devices"
-pkgver=4
-pkgrel=1
+pkgver=5
+pkgrel=0
 url="https://postmarketos.org"
 license="BSD-3-Clause"
 arch="aarch64"
@@ -17,6 +17,7 @@ _ucm_commit="f959b6c46165f23eebcf34ffefef14c6be015a55"
 source="
 	alsa-ucm-conf-$_ucm_commit.tar.gz::https://gitlab.com/sdm845-mainline/alsa-ucm-conf/-/archive/$_ucm_commit/alsa-ucm-conf-$_ucm_commit.tar.gz
 	90-feedbackd-pmi8998.rules
+	q6voiced.conf
 "
 
 package() {
@@ -27,9 +28,10 @@ package() {
 
 nonfree_firmware() {
 	pkgdesc="Modem, WiFi and GPU Firmware"
-	depends="pd-mapper pd-mapper-openrc tqftpserv tqftpserv-openrc msm-modem"
+	depends="pd-mapper pd-mapper-openrc tqftpserv tqftpserv-openrc msm-modem q6voiced"
 	install="$subpkgname.post-install"
-	mkdir "$subpkgdir"
+
+	install -Dm644 q6voiced.conf "$subpkgdir"/etc/conf.d/q6voiced
 }
 
 ucm() {
@@ -43,4 +45,5 @@ ucm() {
 sha512sums="
 48fba9c041a2a2dfef9f038dfeeb7f636ed4e3b4d1babe2bd9b6ee350a4a34472b0f20d69b57864aa79fb28b24bb38a88ef1542a6d3211db713b361a4d136745  alsa-ucm-conf-f959b6c46165f23eebcf34ffefef14c6be015a55.tar.gz
 ea3c7f9664eb9be2ffb6879db044b44cd826747b73c6527d54d79102e58a44e1b32d08d0b1b261329eae43d6a30bc8ef80d89b1d63af1c74ba5dc66ac57911d7  90-feedbackd-pmi8998.rules
+7f599f086dba97ac39ce98798969bc8e9c26dd3b062bb8f95852182df52814b70d49b701e27b43abeb3639b16ba053e416c14cf75e0bf4a9f2fe7c01fb0ac41c  q6voiced.conf
 "
