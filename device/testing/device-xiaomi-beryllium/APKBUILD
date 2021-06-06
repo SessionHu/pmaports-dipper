@@ -5,7 +5,7 @@
 pkgname=device-xiaomi-beryllium
 pkgdesc="Xiaomi Poco F1"
 pkgver=6
-pkgrel=7
+pkgrel=8
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
@@ -60,7 +60,7 @@ phosh() {
 }
 
 sha512sums="
-70bd1a459e846caff88f2b1e1225beac777758bc518c9fad1351031b67e0ed7d4f7aa80fb780ee44fe9887b621ba6917e60f6f8aebfa5e82d562e0fc751ccc7f  deviceinfo
+a96cc045876a2c798c039291fd2d8b247bc29f38cfe090f09c10eab8d86e69c98b8892eae63b81021b8b6c37b2dada1639a31d99b76a4fb466e35687c06ee3e1  deviceinfo
 e0bbe6210198ec37a0f18fb7dec5dead4ad41693ad5b3c20731e68d4f9d8fdff393dcbd110e87564030f1326e12da8af58c020e9bc14eb9ca2c54224b962df7e  rootston.ini
 db78af5be2a08109962fa2511d6e84efe9a425e1d45c7e0e75bf0be383cfc1c5fca5d79f3d7bd2f146e8a62460c88b214819ad522316c0c2e08783a80d8ceb05  xiaomi,beryllium.json
 "
