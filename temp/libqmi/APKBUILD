@@ -1,7 +1,7 @@
 # Forked from Alpine INSERT-REASON-HERE (CHANGEME!)
 
 pkgname=libqmi
-pkgver=1.29.4
+pkgver=1.29.8
 pkgrel=0
 pkgdesc="QMI modem protocol helper library"
 url="https://www.freedesktop.org/wiki/Software/libqmi"
@@ -14,9 +14,10 @@ subpackages="
 	$pkgname-doc
 	$pkgname-bash-completion
 	"
-source="https://gitlab.freedesktop.org/aleksm/libqmi/-/archive/aleksander/profiles/libqmi-aleksander-profiles.tar.gz"
+_commit="e3664bfdea485a94ee3e75114111e1c332cadc43"
+source="https://gitlab.freedesktop.org/mobile-broadband/libqmi/-/archive/$_commit/libqmi-$_commit.tar.gz"
 
-builddir="$srcdir"/libqmi-aleksander-profiles
+builddir="$srcdir"/libqmi-$_commit
 
 build() {
 	NOCONFIGURE=1 ./autogen.sh
@@ -41,4 +42,6 @@ package() {
 	make DESTDIR="$pkgdir" install
 }
 
-sha512sums="c457af47a18c7476322613c88c796f769183e6beb8230fffb9ccb91158e64510e8b0bbf6ca2e70c4ee56ab048927947bdcd966c54ee1d1b2b1e733ca62b02bcb  libqmi-aleksander-profiles.tar.gz"
+sha512sums="
+170f5c6ca23caa41d42e7e068609873662d0e3c9b091fda68d41ee3cdc0edc4ae4c25fa0dd413251235cc5b61564d56775f435ab00b488345d20ab32c67484a1  libqmi-e3664bfdea485a94ee3e75114111e1c332cadc43.tar.gz
+"

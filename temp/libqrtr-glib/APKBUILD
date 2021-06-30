@@ -9,9 +9,11 @@ arch="all"
 license="LGPL-2.1-or-later"
 makedepends="glib-dev gtk-doc linux-headers autoconf-archive automake libtool"
 subpackages="$pkgname-dev $pkgname-doc"
-source="https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib/-/archive/master/libqrtr-glib-master.tar.gz"
 
-builddir="$srcdir"/libqrtr-glib-master
+_commit="02c2bb1de8f2df71fca85d40dec8da554093c84b"
+source="https://gitlab.freedesktop.org/mobile-broadband/libqrtr-glib/-/archive/$_commit/libqrtr-glib-$_commit.tar.gz"
+
+builddir="$srcdir"/libqrtr-glib-$_commit
 
 build() {
 	NOCONFIGURE=1 ./autogen.sh
@@ -34,4 +36,6 @@ package() {
 	make DESTDIR="$pkgdir" install
 }
 
-sha512sums="098f56dc43d7607aa06e5ba80dcec406b4f99bce2c9bb5dcaa555f1bc59ed1661fa6fb75567ac29de1fbe108919bb2bdafcb6a9f8e573c2b23087425ea0ad5c9  libqrtr-glib-master.tar.gz"
+sha512sums="
+56c71c80a443f2603dfa716b8472c02fdd023b42ca7dcc5cd5a0789887ed604049f47dabe8476576dea7b1b6c0142c29cf1370f387aa2e4a6d6c9a15251e68fd  libqrtr-glib-02c2bb1de8f2df71fca85d40dec8da554093c84b.tar.gz
+"

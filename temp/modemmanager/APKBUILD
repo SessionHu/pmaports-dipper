@@ -1,7 +1,7 @@
 # Forked from Alpine INSERT-REASON-HERE (CHANGEME!)
 
 pkgname=modemmanager
-pkgver=1.16.2
+pkgver=1.17.2
 pkgrel=5
 pkgdesc="ModemManager library"
 url="http://www.freedesktop.org/wiki/Software/ModemManager"
@@ -20,10 +20,11 @@ subpackages="
 	$pkgname-openrc
 	$pkgname-bash-completion
 	"
-source="https://gitlab.freedesktop.org/kalube/ModemManager/-/archive/caleb/hacking-qmi/ModemManager-caleb-hacking-qmi.tar.gz
+_commit="12613eac8791fb70b9fe45eb07440c559cc1e198"
+source="https://gitlab.freedesktop.org/mobile-broadband/ModemManager/-/archive/$_commit/ModemManager-$_commit.tar.gz
 	$pkgname.rules
 	$pkgname.initd"
-builddir="$srcdir"/ModemManager-caleb-hacking-qmi
+builddir="$srcdir"/ModemManager-$_commit
 
 build() {
 	NOCONFIGURE=1 ./autogen.sh
@@ -81,6 +82,8 @@ EOF
 check() {
 	make check
 }
-sha512sums="68c91bac43f981f8e25bab66f202d45b4d9c1937e7788e13ce12329921829fa6598ebaa6f58610acd3017107aa0a241d7fc714f8fd6423d2a7700cd6a6caef4b  ModemManager-caleb-hacking-qmi.tar.gz
+sha512sums="
+5186e48ca98db0340415add52cd48445e7ac8e68be1bb016304a9cfcb059a0676930a0411116c48c99973df4c5b685eb10cc43e3706cad5c67211608eb46b543  ModemManager-12613eac8791fb70b9fe45eb07440c559cc1e198.tar.gz
 6fab86c27502b29be0c6610d835a3249a4a81993eb986cff2c3ea9393fadd3f693ba4bb0532ae0e50a83d359559511859dd05f7ea2f0cb52839f535a7e49f8a0  modemmanager.rules
-9f74a2473b9cc7be42a467809639f5720ab251d13f29f8bbd4fd9a13edb80c10c5ee50fbe50819bfe67f231805b92f007c3e7403c46ab998dc843e1f9549659b  modemmanager.initd"
+9f74a2473b9cc7be42a467809639f5720ab251d13f29f8bbd4fd9a13edb80c10c5ee50fbe50819bfe67f231805b92f007c3e7403c46ab998dc843e1f9549659b  modemmanager.initd
+"
