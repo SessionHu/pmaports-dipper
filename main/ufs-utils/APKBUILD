@@ -1,0 +1,27 @@
+# Contributor: Nova <novaburst@tilde.team>
+# Maintainer: Nova <novaburst@tilde.team>
+pkgname=ufs-utils
+pkgver=20210314
+pkgrel=1
+pkgdesc="Utilities to manage the UFS filesystem series"
+url="https://github.com/westerndigitalcorporation/ufs-utils"
+arch="all"
+license="GPL-2.0-only"
+depends=""
+makedepends="libbsd-dev"
+source="$pkgname-$pkgver.zip::https://github.com/westerndigitalcorporation/ufs-utils/archive/refs/heads/dev.zip"
+builddir="$srcdir/ufs-utils-dev"
+options="!check"
+
+build() {
+	make
+}
+
+package() {
+	mkdir -p -v "$pkgdir/sbin"
+	install -m0755 $pkgname "$pkgdir/sbin/ufs-utils"
+}
+
+sha512sums="
+f6ec2abdf34ef1192ae9c41c204164698ce345a5ffe95e6e430ea6cfad371b01a7e3f08b18bab72bedfba89ad4a2132abe4308c2315c839d278453145e3b14b6  ufs-utils-20210314.zip
+"
