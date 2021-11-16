@@ -1,0 +1,29 @@
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname=device-motorola-asanti
+pkgdesc="Motorola Photon Q (XT897)"
+pkgver=0.1
+pkgrel=2
+url="https://postmarketos.org"
+license="MIT"
+arch="armv7"
+options="!check !archcheck"
+depends="
+	linux-postmarketos-qcom-msm8974
+	mesa-dri-gallium
+	mkbootimg
+	postmarketos-base
+"
+makedepends="devicepkg-dev"
+source="deviceinfo"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+87993879ebe4e975b926be35930e0dbd74acc7d58d151e2f0e053b57f759370534ed5783d404054e00177c03937a1287c36f858f0fac213d6a7bbddb31e725e0  deviceinfo
+"

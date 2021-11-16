@@ -25,6 +25,7 @@ setup_framebuffer
 # Hooks
 for hook in /etc/postmarketos-mkinitfs/hooks/*.sh; do
 	[ -e "$hook" ] || continue
+	echo "Runnig hook $hook"
 	sh "$hook"
 done
 
