@@ -9,6 +9,7 @@ pkgdesc="Touch-enabled framebuffer keyboard (not only) for vampire slayers"
 url="https://gitlab.com/cherrypicker/buffyboard"
 arch="all"
 license="GPL-3.0"
+options="!strip"
 source="https://gitlab.com/cherrypicker/buffyboard/-/archive/$_commit/buffyboard-$_commit.tar.gz
 	https://github.com/lvgl/lv_drivers/archive/$_lv_drivers_commit.tar.gz
 	https://github.com/lvgl/lvgl/archive/$_lvgl_commit.tar.gz
@@ -25,6 +26,7 @@ prepare() {
 
 build() {
 	abuild-meson . output
+	meson setup output --buildtype debug
 	meson compile ${JOBS:+-j ${JOBS}} -C output
 }
 
