@@ -3,14 +3,14 @@
 
 pkgname=device-shift-axolotl
 pkgdesc="SHIFT6mq"
-pkgver=0.1
+pkgver=0.2
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	linux-shift-axolotl
+	linux-postmarketos-qcom-sdm845
 	mkbootimg
 	postmarketos-base
 	postmarketos-update-kernel
@@ -29,5 +29,5 @@ package() {
 }
 
 sha512sums="
-7312a14ef9c99e2452e1161bf0bca03857714eb367aa32d50de5c665ade3dd9e3e488a129b1946ca14f83c56f067f867b7c584497b62800490789982ddebe894  deviceinfo
+005ab0d31c78bd09d7da290d948aa1eb1cc901c59a5b81068667dccbbce2d31811a7205f18105f8da8e85178d583870e7b1e9364192906a7d5857d636f8a1cec  deviceinfo
 "
