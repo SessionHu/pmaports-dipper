@@ -1,0 +1,44 @@
+# Maintainer: Alexander Martinz <amartinz@shiftphones.com>
+
+pkgname=firmware-shift-sdm845
+pkgver=0.1
+pkgrel=0
+pkgdesc="Firmware for SHIFT sdm845"
+url="https://gitlab.com/amartinz/firmware-shift-sdm845"
+arch="aarch64"
+depends="soc-qcom-sdm845-nonfree-firmware linux-firmware-qcom linux-firmware-ath10k"
+license="proprietary"
+options="!check !strip !archcheck !tracedeps"
+
+_version="ee285f8d49e45210391d044bc2e9eeeb82c8c22f"
+
+source="$pkgname.tar.gz::$url/-/archive/$_version/$pkgname-$_version.tar.gz
+	firmware.files
+	30-gpu-firmware.files"
+subpackages="
+	$pkgname-initramfs:firmware_initramfs"
+
+package() {
+	cd "$srcdir/$pkgname-$_version/"
+	while IFS="" read -r _i || [ -n "$_i" ]; do
+		[ ! -d $(dirname $_i) ] && mkdir -p $(dirname $_i)
+		echo $_i
+		install -Dm644 $_i "$pkgdir/$_i"
+	done < "$srcdir/firmware.files"
+}
+
+firmware_initramfs() {
+	pkgdesc="Files to be included in the initramfs to support osk-sdl"
+	depends="$pkgname"
+	install_if="$pkgname-nonfree-firmware"
+	mkdir "$subpkgdir"
+
+	install -Dm644 "$srcdir/30-gpu-firmware.files" \
+		"$subpkgdir/etc/postmarketos-mkinitfs/files/30-gpu-firmware.files"
+}
+
+sha512sums="
+29b94df8a3ccab97996151e1ed2b8accd0deb3b206188ca6340c4b0288744be2d57411da651a82dcc5294df47cfc7c74b7a863963f8f9977136adc84b71739a1  firmware-shift-sdm845.tar.gz
+b7d0e8fdbe8ba0c633d5509a85ef8a1c8c8055796ff5d922455f0ede109e0b49df36e0050dc51e45da78c91544dc445ece153407590b9d4a488b026625a9a75b  firmware.files
+8695a37da5578fdae506f373131ce9481be3db1a86f329c19893e7360b9cb0fadd47b0b1318b2e74702c5e76a9be022f58610940ad17becab49788689f6ca3f8  30-gpu-firmware.files
+"

@@ -1,0 +1,7 @@
+./lib/firmware/qcom/sdm845/axolotl/a630_zap.mbn
+./lib/firmware/qcom/sdm845/axolotl/adsp.mbn
+./lib/firmware/qcom/sdm845/axolotl/cdsp.mbn
+./lib/firmware/qcom/sdm845/axolotl/ipa_fws.mbn
+./lib/firmware/qcom/sdm845/axolotl/mba.mbn
+./lib/firmware/qcom/sdm845/axolotl/modem.mbn
+./lib/firmware/qcom/sdm845/axolotl/venus.mbn
