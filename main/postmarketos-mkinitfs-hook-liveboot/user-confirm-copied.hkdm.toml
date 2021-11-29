@@ -1,0 +1,9 @@
+
+# Pressing volume down creates /liveboot/confirm to indicate
+# that they have copied the rootfs
+[[events]]
+name = "confirm"
+event_type = "EV_KEY"
+key_state = "released"
+keys = ["KEY_VOLUMEDOWN"]
+command = "touch /liveboot/confirm"

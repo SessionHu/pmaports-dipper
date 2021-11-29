@@ -1,0 +1,31 @@
+# Contributor: Caleb Connolly <caleb@connolly.tech>
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
+pkgname=postmarketos-mkinitfs-hook-liveboot
+pkgver=1
+pkgrel=25
+pkgdesc="initfs hook to liveboot (from RAM) a rootfs"
+url="https://postmarketos.org"
+arch="all"
+license="GPL-3.0-only"
+depends="hkdm"
+options="!check"
+source="00-liveboot.sh
+	user-confirm-copied.hkdm.toml
+	30-liveboot.files"
+builddir="$srcdir/"
+
+package() {
+	mkdir -p "$pkgdir"/etc/postmarketos-mkinitfs/hooks/
+	install -Dm644 "$srcdir"/00-liveboot.sh \
+		"$pkgdir"/etc/postmarketos-mkinitfs/hooks/
+	install -Dm644 "$srcdir"/user-confirm-copied.hkdm.toml \
+		"$pkgdir"/etc/hkdm/config.d/user-confirm.toml
+	install -Dm644 "$srcdir"/30-liveboot.files \
+		"$pkgdir"/etc/postmarketos-mkinitfs/files/30-liveboot.files
+}
+
+sha512sums="
+07dbe0f2b084931b818d2547e4a01a9e87558e603a8eaa0011aa678d7119c3901c9e297601434bdd990135dffeb76fbf82941bc521267c24f4c8f26bfdf16c67  00-liveboot.sh
+c434900d6cef5e859c7a5858708812a700e12d2cdf6d7e10331f02e87cc9347c28972dad342aec4721560a66260f1334d228d13c3859f29fc708ec88f79ae73e  user-confirm-copied.hkdm.toml
+ac63c772d406043be9858a369e1dea3a56240093ad0c661b28a23c4d62e93944278db90f61ffec72b3a834b161bb4a3a05ce802a58022f15affb5e7a9184c532  30-liveboot.files
+"

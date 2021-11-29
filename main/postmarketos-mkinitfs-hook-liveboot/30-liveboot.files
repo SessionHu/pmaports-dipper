@@ -1,0 +1,2 @@
+/usr/sbin/hkdm
+/etc/hkdm/config.d/user-confirm.toml
