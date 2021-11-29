@@ -1,0 +1,8 @@
+#!/sbin/openrc-run
+
+command="/usr/sbin/hkdm"
+command_background=true
+pidfile="/run/hkdm.pid"
+
+name="HKDM"
+description="Hotkey Daemon (For) Mobile"
