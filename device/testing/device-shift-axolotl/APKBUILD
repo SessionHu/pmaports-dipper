@@ -3,7 +3,7 @@
 
 pkgname=device-shift-axolotl
 pkgdesc="SHIFT6mq"
-pkgver=0.2
+pkgver=0.3
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
@@ -36,5 +36,5 @@ nonfree_firmware() {
 }
 
 sha512sums="
-005ab0d31c78bd09d7da290d948aa1eb1cc901c59a5b81068667dccbbce2d31811a7205f18105f8da8e85178d583870e7b1e9364192906a7d5857d636f8a1cec  deviceinfo
+45337a27f29b68b7ca15a2ff3f1a928ae777b5e5fa1bd20b0f236c66b388ba72858da5295028ef403d79a3d68d74809ab05d769f6d7aa71574e7adab1ba7b843  deviceinfo
 "
