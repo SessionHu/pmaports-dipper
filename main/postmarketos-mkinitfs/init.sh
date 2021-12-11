@@ -47,6 +47,13 @@ unlock_root_partition
 resize_root_filesystem
 mount_root_partition
 
+kpartx -l /dev/sda17
+losetup --list
+ls /dev/dm*
+mount
+ls /sysroot
+ls /sysroot/boot
+
 # Mount boot partition into sysroot, so OpenRC doesn't need to do it (#664)
 umount /boot
 mount_boot_partition /sysroot/boot "rw"

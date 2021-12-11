@@ -1,7 +1,8 @@
 # Maintainer: Oliver Smith <ollieparanoid@postmarketos.org>
 pkgname=postmarketos-ondev
 pkgver=0.7.3
-pkgrel=0
+_commit="34bf75833f668c3345b847a7ae861957ed43c018"
+pkgrel=2
 pkgdesc="Calamares based on-device installer"
 url="https://postmarketos.org"
 # armhf blocked by qt5-qtdeclarative
@@ -39,13 +40,14 @@ depends="
 	"
 subpackages="$pkgname-openrc"
 install="$pkgname.post-install"
-source="https://gitlab.com/postmarketOS/postmarketos-ondev/-/archive/$pkgver/postmarketos-ondev-$pkgver.tar.gz"
+source="https://gitlab.com/sdm845-mainline/postmarketos-ondev/-/archive/$_commit/postmarketos-ondev-$_commit.tar.gz"
 options="!check"  # has no tests
+builddir="$srcdir/$pkgname-$_commit"
 
 package() {
 	make DESTDIR="$pkgdir" install
 }
 
 sha512sums="
-1db2b15141ceaaf9e2f2742444d6dbe12a378c5c87b93c1d03800a02de789d07e121f39f6b409577dd652b34461f576799a640abe830b9562ac03d2a843fd029  postmarketos-ondev-0.7.3.tar.gz
+bfd099b794459ccf5bca30989cc18721ab83a58f53de18bf631be84bd1d892e52cecf06c4463a3b140935b0fd4712d1c646d3bc5b1d81364011e969e3f4690a0  postmarketos-ondev-34bf75833f668c3345b847a7ae861957ed43c018.tar.gz
 "

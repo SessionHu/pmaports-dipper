@@ -81,7 +81,7 @@ mount_subpartitions() {
 			sed 's/\(\s\+[0-9]\+\)\+\s\+//;s/ .*//;s/^/\/dev\//')"
 		echo "$partitions" | while read -r partition; do
 			case "$(kpartx -l "$partition" 2>/dev/null | wc -l)" in
-				2)
+				2|3)
 					echo "Mount subpartitions of $partition"
 					kpartx -afs "$partition"
 					# Ensure that this was the *correct* subpartition
