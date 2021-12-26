@@ -20,7 +20,7 @@ deviceinfo_screen_height="2160"
 
 # Bootloader related
 deviceinfo_flash_method="fastboot"
-deviceinfo_kernel_cmdline="PMOS_NO_OUTPUT_REDIRECT console=ttyMSM0,115200n8"
+deviceinfo_kernel_cmdline="ath10k.debug_mask=0xffffffff tp_printk trace_event=ath10k:* PMOS_NO_OUTPUT_REDIRECT console=ttyMSM0,115200n8 console=tty1"
 deviceinfo_generate_bootimg="true"
 deviceinfo_bootimg_qcdt="false"
 deviceinfo_bootimg_dtb_second="false"
@@ -31,6 +31,7 @@ deviceinfo_flash_offset_second="0x00f00000"
 deviceinfo_flash_offset_tags="0x00000100"
 deviceinfo_flash_pagesize="4096"
 deviceinfo_flash_sparse="true"
+deviceinfo_flash_kernel_on_update="true"
 
 # Kernel
 deviceinfo_append_dtb="true"
