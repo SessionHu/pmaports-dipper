@@ -1,0 +1,44 @@
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname=device-google-blueline
+pkgdesc="Google Pixel 3"
+pkgver=1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+options="!check !archcheck"
+depends="
+	linux-postmarketos-qcom-sdm845
+	mkbootimg
+	postmarketos-base
+	postmarketos-update-kernel
+	soc-qcom-sdm845
+"
+makedepends="devicepkg-dev"
+source="deviceinfo rootston.ini"
+subpackages="$pkgname-nonfree-firmware:nonfree_firmware $pkgname-phosh"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+nonfree_firmware() {
+	pkgdesc="Modem, WiFi and GPU Firmware, also needed for osk-sdl"
+	depends="firmware-google-pixel3 firmware-google-pixel3-initramfs"
+	mkdir "$subpkgdir"
+}
+
+phosh() {
+	install_if="$pkgname=$pkgver-r$pkgrel phosh"
+	install -Dm644 "$srcdir"/rootston.ini \
+		"$subpkgdir"/etc/phosh/rootston.ini
+}
+
+sha512sums="
+1724d3f8e0bc5de5b6a7512eee6900f83916dbde21070d52c1ee2be209b3f47963c8872726da77415be8dbe71c7d57d048d95c3ef9bed02d749dc7082de31236  deviceinfo
+9fef488a655fcbad4fb28c11d7d6cbe385096e766cd99ca59802f1dbc4e3c99dac0ff682549e02fac0b73f7e95db953f3a87c453d1b19b229785e4ffeec515ed  rootston.ini
+"

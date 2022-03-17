@@ -1,0 +1,43 @@
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
+
+pkgname=firmware-google-pixel3
+pkgver=1
+pkgrel=0
+pkgdesc="Firmware for Pixel 3 (XL)"
+url="https://gitlab.com/sdm845-mainline/firmware-google-pixel3"
+arch="aarch64"
+depends="soc-qcom-sdm845-nonfree-firmware linux-firmware-qcom linux-firmware-ath10k"
+license="proprietary"
+options="!check !strip !archcheck !tracedeps"
+
+_version="f4fed8e4b01987eacd157d67ddc4ac19fffbe287"
+
+source="$pkgname-$_version.tar.gz::$url/-/archive/$_version/$pkgname-$_version.tar.gz
+	firmware.files
+	30-gpu-firmware.files"
+subpackages="
+	$pkgname-initramfs:firmware_initramfs"
+
+package() {
+	cd "$srcdir/$pkgname-$_version/"
+	while IFS="" read -r _i || [ -n "$_i" ]; do
+		[ ! -d $(dirname $_i) ] && mkdir -p $(dirname $_i)
+		install -Dm644 $_i "$pkgdir/$_i"
+	done < "$srcdir/firmware.files"
+}
+
+firmware_initramfs() {
+	pkgdesc="Files to be included in the initramfs to support osk-sdl"
+	depends="$pkgname"
+	install_if="$pkgname-nonfree-firmware"
+	mkdir "$subpkgdir"
+
+	install -Dm644 "$srcdir/30-gpu-firmware.files" \
+		"$subpkgdir/etc/postmarketos-mkinitfs/files/30-gpu-firmware.files"
+}
+
+sha512sums="
+6d747acba53fa1bf3ae01f2733b84d2bb5b654f3da83af11fd5a0ca0e28e77c92af0e9d631ca9c676684abc528da28c422d10002873950399b64d5cd1702df15  firmware-google-pixel3-f4fed8e4b01987eacd157d67ddc4ac19fffbe287.tar.gz
+9a597b775852d5a02d8d95f772db164583c0c87a04050fb9da75befec787ace4b113e27c384770c8e026043b30a782508ed7834d9703fc126e3a1b143bff4860  firmware.files
+087b18ae18ce5d0f9e0c8aa7efa61210a619ee7356ad8cccafc65ce85426720752e8bd4143d49b6bc99692902f9eb7d8f95b1a09793f8491380b00a80dc1adc9  30-gpu-firmware.files
+"
