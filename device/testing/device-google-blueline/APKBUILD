@@ -1,8 +1,9 @@
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-google-blueline
 pkgdesc="Google Pixel 3"
 pkgver=1
-pkgrel=0
+pkgrel=3
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
@@ -39,6 +40,6 @@ phosh() {
 }
 
 sha512sums="
-1724d3f8e0bc5de5b6a7512eee6900f83916dbde21070d52c1ee2be209b3f47963c8872726da77415be8dbe71c7d57d048d95c3ef9bed02d749dc7082de31236  deviceinfo
+d367555eb872ce3f2b689c1f801f0cb05b9ce51d5271759a3a094319741bac9707cd86eab0e6d086aba9903aceb2cc5c808f11776d74a559b4126eb67f082305  deviceinfo
 9fef488a655fcbad4fb28c11d7d6cbe385096e766cd99ca59802f1dbc4e3c99dac0ff682549e02fac0b73f7e95db953f3a87c453d1b19b229785e4ffeec515ed  rootston.ini
 "
