@@ -14,6 +14,7 @@ depends="
 	postmarketos-base
 	postmarketos-update-kernel
 	soc-qcom-sdm845
+	soc-qcom-sdm845-qbootctl
 "
 makedepends="devicepkg-dev"
 source="deviceinfo rootston.ini"
