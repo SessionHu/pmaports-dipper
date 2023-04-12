@@ -1,0 +1,71 @@
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname=device-lenovo-yogac630
+pkgdesc="Lenovo Yoga C630"
+pkgver=0.1
+pkgrel=13
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+# pmb:strict: avoid grub-related install error during build with pmbootstrap
+options="!check !archcheck pmb:strict"
+depends="postmarketos-base
+	linux-postmarketos-qcom-sdm845
+	soc-qcom-sdm845"
+makedepends="devicepkg-dev grub grub-efi"
+subpackages="$pkgname-nonfree-firmware:nonfree_firmware"
+source="
+	deviceinfo
+	grub.cfg
+	"
+
+build() {
+	devicepkg_build $startdir $pkgname
+
+	# --config="$srcdir/grub_early.cfg"
+	grub-mkimage \
+		--prefix="/grub" \
+		--output="bootaa64.efi" \
+		--format="arm64-efi" \
+		--compression="xz" \
+		\
+		all_video \
+		cat \
+		configfile \
+		disk \
+		echo \
+		efi_gop \
+		fat \
+		gzio \
+		help \
+		iso9660 \
+		linux \
+		ls \
+		normal \
+		part_gpt \
+		part_msdos \
+		search \
+		search_label \
+		test \
+		true
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+
+	install -Dm644 "$srcdir"/bootaa64.efi \
+		"$pkgdir"/boot/EFI/Boot/bootaa64.efi
+
+	install -Dm644 "$srcdir"/grub.cfg \
+		"$pkgdir"/boot/grub/grub.cfg
+}
+
+nonfree_firmware() {
+	pkgdesc="Modem, WiFi, GPU and other device-specific firmware"
+	depends="firmware-lenovo-yogac630 soc-qcom-sdm845-nonfree-firmware"
+	mkdir "$subpkgdir"
+}
+
+sha512sums="
+b19b4ff8f0072bc5a9f00b26eca25062c62de087f6101e69d47e1de6663be1ca02a0e0d712b9fb397e4a44160ceeabaed98e43dd6a78c98c86b35f0c462db6e3  deviceinfo
+8a25aec718f9d98fda3f8bb8c06439efbf1998f224c7303097ed93e500990a891937d2ff580a91f1c568d60b7821e252fff08ae0743ef8a6ed62c8e1d0eea390  grub.cfg
+"
