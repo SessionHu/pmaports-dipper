@@ -1,0 +1,32 @@
+# Kept from Alpine until stable
+# Maintainer: Dylan Van Assche <me@dylanvanassche.be>
+
+pkgname=libssc
+pkgver=0.1.3
+pkgrel=0
+pkgdesc="Library to expose Qualcomm Sensor Core sensors"
+url="https://codeberg.org/DylanVanAssche/libssc"
+arch="all"
+license="GPL-3.0-or-later"
+makedepends="linux-headers libqmi-dev glib-dev protobuf-c-dev meson libgudev-dev eudev-dev"
+options="!check" # no tests yet
+subpackages="$pkgname-dbg $pkgname-dev"
+builddir="$srcdir/$pkgname"
+source="$pkgname-$pkgver.tar.gz::https://codeberg.org/DylanVanAssche/libssc/archive/$pkgver.tar.gz
+	"
+
+build() {
+	abuild-meson \
+		-Db_lto=true \
+		. output
+	meson compile -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+
+sha512sums="
+7bcb3412b31cca5448926723876949919f9e4eac69742ff1222763289fbe688b6167e4ec5a95f23b1ffe0710e3af5b35daba0064f17b5449efb9342e14e5dbc7  libssc-0.1.3.tar.gz
+"
