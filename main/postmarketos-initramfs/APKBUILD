@@ -32,6 +32,7 @@ source="
 	00-initramfs-extra-base.files
 	init.sh
 	init_functions.sh
+	mdev.conf
 	"
 arch="noarch"
 license="GPL-2.0-or-later"
@@ -59,6 +60,9 @@ package() {
 		-t "$pkgdir"/usr/share/mkinitfs/files-extra/
 	mkdir -p "$pkgdir"/etc/mkinitfs/files-extra
 
+	install -Dm644 "$srcdir"/mdev.conf \
+		"$pkgdir"/usr/share/mkinitfs/mdev.conf
+
 	mkdir -p "$pkgdir"/usr/share/mkinitfs/hooks
 	mkdir -p "$pkgdir"/usr/share/mkinitfs/hooks-extra
 	mkdir -p "$pkgdir"/etc/mkinitfs/hooks
@@ -67,9 +71,10 @@ package() {
 
 sha512sums="
 bed319179bcd0b894d6267c7e73f2890db07bc07df71542936947dfb3bdb17fade8a7b4e7b577f278af4472464427bba07f75aff0a1e454a4167052c088f3b6a  00-default.modules
-399da6e61993f48c8a62c956bb15d294cac10bf003d84257efdf4a213ebc87bb51cdcd75c4675f51c3be832146b8f21a7c769bf3e94f574a5067f001662632a1  00-initramfs-base.dirs
-3bc73f3a0d1de210444d9c45fab51fd4520e38b43ffbb76368f8ff854b990aa2f21c6356840c5a48eb9808e834eb885a6d581639a60707c26abf66fc20b70db9  00-initramfs-base.files
-e984cd3033ce8752ebc71127828b964b46259a5263c2ebfab32c1394b674bcff464862ff00b8e920d3d31386c54ca0b94f84bc77580d275ecfeea33e76c07ef4  00-initramfs-extra-base.files
-4e6f5b79b0bd6188bab9a96526f727780dda6be1c1e5fe04c3ce5a892bf0f92b7c7d0fc5809ac3eacc8121096a4815c6177a573f1b968752972f20460cc04ac6  init.sh
-38416294fe58af8f687a85a3b20b285075cdb34da8aab6c96a778994ee3dd121d1bb29da71b8147b2a53f19b58eb3203f583ce261cbb05b4bd1987bc7c82b1d9  init_functions.sh
+5b364300f31c91fd0591eb0715f67cbf5383f45246a5fb9f34b79f7cb2e3b15768b2130e5f32f816cc169950f988c1beabc879ba31645c58ce131a288dbc071d  00-initramfs-base.dirs
+881ea588a27ce08d2befb5e32e7aa4333fb64a80efcc961edcac0f327975ab64b2ab2078d2eaf9679eeaba73ecca25576f288278283c81e751bc8c0a0e2fb489  00-initramfs-base.files
+8a4adad3785af474b36a09a05f6a3b2c4b4f43aac331a53b903abfa51ea12be1e3d1d807b7a6e66a1346815f3b0044daf8cd62e21e2dc75d2db13ee265a72985  00-initramfs-extra-base.files
+212a68d77581866e1f67ce930c550066f616d8625d456d0ea50f889a86a2666052fe32232286bf7ff9280ca66bc055fa0edd8d9c1b96bca7bdb3772b71165cbe  init.sh
+2e2321564f38b2f525a0e5505f4128c63c3f18e9dd1e4a5ea64d61ec6f6f8b2e06c06a4d7493828bb9aa817d18a7a60fffb0214df11b01e59df8385364233391  init_functions.sh
+675e7d5bee39b2df7d322117f8dcaccc274d61beaf4d50ead19bbf2109446d64b1c0aa0c5b4f9846eb6c1c403418f28f6364eff4537ba41120fbfcbc484b7da7  mdev.conf
 "

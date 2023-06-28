@@ -2,6 +2,9 @@
 /bin/busybox-extras
 /bin/sh
 /etc/deviceinfo
+/usr/share/mkinitfs/mdev.conf:/etc/mdev.conf
+/lib/mdev/persistent-storage
+/sbin/blkid
 /usr/share/misc/source_deviceinfo
 /usr/bin/unudhcpd
 /usr/sbin/kpartx
