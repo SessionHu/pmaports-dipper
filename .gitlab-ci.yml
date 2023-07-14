@@ -1,12 +1,16 @@
 ---
 
 # global settings
-image: alpine:latest
-after_script:
-  - .ci/lib/move_logs.sh $CI_PROJECT_DIR
+default:
+  image: alpine:latest
+  after_script:
+    - .ci/lib/move_logs.sh $CI_PROJECT_DIR
+
+
 stages:
   - lint
   - build
+  - boot
 
 # defaults for "only"
 # We need to run the CI jobs in a "merge request specific context", if CI is
@@ -164,3 +168,40 @@ build-riscv64:
   extends: .build
   script:
     - .ci/build-riscv64.sh
+
+.boot-test:
+  inherit:
+    default: false
+  tags:
+    - pts
+  dependencies:
+    - build-aarch64
+  stage: boot
+  <<: *only-default
+  only:
+    changes:
+      - temp/*
+      - main/*
+      - modem/*
+  variables:
+    DEVICE: shift-axolotl
+    UI: gnome-mobile
+  before_script:
+    - .ci/lib/gitlab_prepare_ci.sh
+    - mkdir -p /home/pmos/.local/var/pmbootstrap/packages/
+    - cp -r packages/ /home/pmos/.local/var/pmbootstrap/packages/
+  script:
+    - .ci/boot-test.sh
+
+boot-test-axolotl:
+  resource_group: axolotl
+  extends: .boot-test
+  variables:
+    DEVICE: shift-axolotl
+    UI: gnome-mobile
+    RRST_PORT: /dev/serial/by-id/usb-FTDI_FT232R_USB_UART_AQ0277X2-if00-port0
+  only:
+    changes:
+      - device/*/device-shift-axolotl/*
+      - device/*/soc-qcom-sdm845/*
+      - device/*/linux-postmarketos-qcom-sdm845/*

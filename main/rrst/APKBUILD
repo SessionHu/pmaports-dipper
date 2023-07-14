@@ -1,0 +1,27 @@
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
+pkgname=rrst
+pkgdesc="postmarketOS boot splash screen"
+pkgver=0.1.0
+pkgrel=0
+_commit="a50a26049400f460bb32b3e7df0d803a73fe90a9"
+url="https://github.com/calebccff/rrst"
+arch="all"
+options="!check" # no testsuite
+license="GPL-3.0"
+source="$pkgname-$_commit.tar.gz::https://github.com/calebccff/rrst/archive/$_commit.tar.gz"
+builddir="$srcdir/rrst-$_commit"
+makedepends="meson inih-dev eudev-dev linux-headers"
+
+build() {
+	abuild-meson . output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+
+}
+
+sha512sums="
+4a8a1d4769bb306dfc23d277d5ab8b9dd14f2fb092a2e6d5355b33f7430c669eebd1dcd2e08d19979ff1691d14390e3291ae2f28edbf173a0bf0cf105645a1c1  rrst-a50a26049400f460bb32b3e7df0d803a73fe90a9.tar.gz
+"
