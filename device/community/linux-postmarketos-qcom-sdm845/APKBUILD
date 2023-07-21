@@ -18,7 +18,7 @@ options="!check !tracedeps
 makedepends="bash bison findutils flex installkernel openssl-dev perl zstd"
 
 _config="config-$_flavor.$arch"
-_tag="sdm845-6.4-r1"
+_tag=sdm845-6.4.4-r6
 
 # Source
 source="
@@ -55,6 +55,6 @@ package() {
 }
 
 sha512sums="
-001c80f8f8e574047c1e34f397822a51259bd0cf729bcc2642b421789fdfde546670bcd3e1426a5ba82724e0e24458bcb7a902dc709afd37d7d2c7c53f23bc7a  linux-sdm845-6.4-r1.tar.gz
-d661a574e3fadfa46e7d6df7c0e278d44b47563fdfc23b8150560af02c87b6e406613d25bf119fa523486356e3ad1fcd6fe5e45fd469d16a11159d2a1731ca94  config-postmarketos-qcom-sdm845.aarch64
+2e6cd7c4e5b0e923a734c875e1b4939e417d745f798051e1b64db5e7f858526e9e710e2e9e7d11ea586fca47d330713340b8bbd25e667aeb4536ac118b2d18b3  linux-sdm845-6.4.4-r6.tar.gz
+4a50e5547bfbba95fef4f26b078edc9acf111581aa7162852af56d82a9cf77b815fd46853b121c481890f4026cf50b4511037e69c472457a439977746e25d750  config-postmarketos-qcom-sdm845.aarch64
 "
