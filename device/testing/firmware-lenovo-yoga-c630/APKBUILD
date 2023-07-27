@@ -1,0 +1,43 @@
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
+
+pkgname=firmware-lenovo-yoga-c630
+pkgver=1
+pkgrel=0
+pkgdesc="Firmware for Lenovo Yoga C630"
+url="https://gitlab.com/sdm845-mainline/firmware-lenovo-yoga-c630"
+arch="aarch64"
+depends="linux-firmware-qcom linux-firmware-ath10k"
+license="proprietary"
+options="!check !strip !archcheck !tracedeps pmb:cross-native"
+
+_commit="3f151fe931be436225b3f45dc4f09294cae1ff4f"
+
+source="$pkgname-$_commit.tar.gz::https://gitlab.com/sdm845-mainline/firmware-lenovo-yoga-c630/-/archive/$_commit/$pkgname-$_commit.tar.gz
+	firmware.files
+	30-gpu-firmware.files"
+subpackages="
+	$pkgname-initramfs:firmware_initramfs"
+builddir="$srcdir/$pkgname-$_commit"
+
+package() {
+	cd "$builddir"
+	for file in $(cat "$srcdir/firmware.files"); do
+		install -Dm644 "$file" "$pkgdir/$file"
+	done
+}
+
+firmware_initramfs() {
+	pkgdesc="Files to be included in the initramfs to support osk-sdl"
+	depends="$pkgname"
+	install_if="$pkgname"
+	mkdir "$subpkgdir"
+
+	install -Dm644 "$srcdir/30-gpu-firmware.files" \
+		"$subpkgdir/etc/postmarketos-mkinitfs/files/30-gpu-firmware.files"
+}
+
+sha512sums="
+bef49ea9d07becfbafc8b1eb47ce712050c85d494dce6fac88e25daa2f15712e48a0f1196a303d0d6ac2f802e49e551c9f5078cbfd75207c8fd5099313f9e91c  firmware-lenovo-yoga-c630-3f151fe931be436225b3f45dc4f09294cae1ff4f.tar.gz
+be8ebe1eff4a00a701e9b6863ad274cbbff263ce82377cae7d99d2d53c747a3d7d8c33b0523a4018302c905b55aa7967dc52c7077ed85349bf01912d5209fc9e  firmware.files
+ec68daad8a477fd0f765fa541a88704bae35fc2465149ab4b698e67a703690af00c36fcd188f4d6b8ad3f3402808966d7d8ae1c9659a53d393e40003b87a487d  30-gpu-firmware.files
+"
