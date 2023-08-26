@@ -5,3 +5,5 @@
 /usr/sbin/fbdebug
 /usr/sbin/reboot-mode
 /usr/sbin/telnetd
+/usr/bin/bootrr
+/usr/libexec/bootrr/*

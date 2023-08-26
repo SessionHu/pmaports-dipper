@@ -218,6 +218,8 @@ find_root_partition() {
 		done
 	fi
 
+	[ -z "$PMOS_ROOT" ] && return;
+
 	PMOS_ROOT=$(pretty_dm_path "$PMOS_ROOT")
 	echo "$PMOS_ROOT"
 }

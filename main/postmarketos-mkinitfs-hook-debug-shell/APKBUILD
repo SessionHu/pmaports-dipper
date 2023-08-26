@@ -3,7 +3,7 @@ pkgver=0.4.6
 pkgrel=0
 pkgdesc="Root shell in the initramfs (security hole, for debugging only)"
 url="https://postmarketos.org"
-depends="postmarketos-mkinitfs devicepkg-utils fbdebug evtest linuxconsoletools reboot-mode libinput libinput-tools"
+depends="postmarketos-mkinitfs devicepkg-utils fbdebug evtest linuxconsoletools reboot-mode libinput libinput-tools bootrr"
 source="20-debug-shell.sh 20-debug-shell.files"
 arch="noarch"
 license="GPL2"
@@ -18,5 +18,5 @@ package() {
 
 sha512sums="
 4a76d2ac4eb5eb33e9e630caf075d9a194960c55675d17a8038592074cf9d92bb80a559dd1430cd871fbf51fe71fbc7b34de7c50a362f8b82f96759af0a9cbb2  20-debug-shell.sh
-845d2eb6ab72c5c1472d65305241ca21dbc26784684e9ae99a180a255f8f7f62123b363d73c642df1f9687106340078311a68a76c123f16829b941bff9151735  20-debug-shell.files
+a5436da2d963ca682db7223c93126fc4492dab1a06df1208c9f0ba8d9457839b5dc18c1a659e4b7f30da80086358271d29659a122ca26148da9a29878e390428  20-debug-shell.files
 "
