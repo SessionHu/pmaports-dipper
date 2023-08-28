@@ -1,0 +1,17 @@
+./lib/firmware/tas2557_uCDSP.bin
+./lib/firmware/postmarketos/ath10k/WCN3990/hw1.0/board-2.bin
+./lib/firmware/postmarketos/qca/crbtfw21.tlv
+./lib/firmware/qcom/sdm845/dipper/adspr.jsn
+./lib/firmware/qcom/sdm845/dipper/adspua.jsn
+./lib/firmware/qcom/sdm845/dipper/cdspr.jsn
+./lib/firmware/qcom/sdm845/dipper/modemr.jsn
+./lib/firmware/qcom/sdm845/dipper/modemuw.jsn
+./lib/firmware/qcom/sdm845/dipper/venus.mbn
+./lib/firmware/qcom/sdm845/dipper/wlanmdsp.mbn
+./lib/firmware/qcom/sdm845/dipper/a630_zap.mbn
+./lib/firmware/qcom/sdm845/dipper/adsp.mbn
+./lib/firmware/qcom/sdm845/dipper/cdsp.mbn
+./lib/firmware/qcom/sdm845/dipper/ipa_fws.mbn
+./lib/firmware/qcom/sdm845/dipper/mba.mbn
+./lib/firmware/qcom/sdm845/dipper/modem.mbn
+./lib/firmware/qca/dipper/crnv21.bin
