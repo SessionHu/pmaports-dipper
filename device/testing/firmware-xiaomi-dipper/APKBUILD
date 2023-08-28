@@ -1,0 +1,42 @@
+# Maintainer: Molly Sophia <mollysophia379@gmail.com>
+
+pkgname=firmware-xiaomi-dipper
+pkgver=6
+pkgrel=1
+pkgdesc="Firmware for xiaomi Mi 8"
+url="https://github.com/Akitlove/firmware-xiaomi-dipper"
+arch="aarch64"
+depends="linux-firmware-qcom linux-firmware-qca linux-firmware-ath10k"
+license="proprietary"
+options="!check !strip !archcheck !tracedeps pmb:cross-native"
+
+_version="62bc4c28e570ad90cee873d1618cb3633ef956b1"
+
+source="$pkgname.tar.gz::$url/archive/$_version.tar.gz
+	firmware.files
+	30-gpu-firmware.files"
+subpackages="
+	$pkgname-initramfs:firmware_initramfs"
+
+package() {
+	cd "$srcdir/$pkgname-$_version/"
+	for i in $(cat "$srcdir"/firmware.files); do
+		install -Dm644 "$i" "$pkgdir/$i"
+	done
+}
+
+firmware_initramfs() {
+	pkgdesc="Files to be included in the initramfs to support osk-sdl"
+	depends="$pkgname"
+	install_if="$pkgname-nonfree-firmware"
+	mkdir "$subpkgdir"
+
+	install -Dm644 "$srcdir/30-gpu-firmware.files" \
+		"$subpkgdir/usr/share/mkinitfs/files/30-gpu-firmware.files"
+}
+
+sha512sums="
+1b760a6002844ed6e39c4e74c75344d74c835538034f6bd6e992bfb15da55d6a6f0e49b876f8418a2bcdb83c29d726261b05e376d9a71f87bd7bb7d1309d0549  firmware-xiaomi-dipper.tar.gz
+c1789ca118f09b4b4132fc9d7e4a5458e6132acbf0e278ab8bccb132dd3206ff54531c46847b280638f399eed5cd2fa6db0ce3cc3bc0fb83bbeab1ce66dcee53  firmware.files
+e2b0fd271052c17479787b226828fcacc3b6348258c77e04cdc9c9307e4a9d5de74265cf4435f5e49273491eb9b437214e1bde18124416de7bce025fc1e00a5d  30-gpu-firmware.files
+"
