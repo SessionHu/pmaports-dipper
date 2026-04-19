@@ -11,7 +11,10 @@ depends="
 	linux-postmarketos-qcom-sdm845-dipper
 	mkbootimg
 	postmarketos-base
-	postmarketos-update-kernel
+	alsa-ucm-conf-sdm845
+	soc-qcom
+	soc-qcom-modem
+	soc-qcom-pd-mapper
 	soc-qcom-sdm845
 	soc-qcom-sdm845-ucm
 "
@@ -19,7 +22,7 @@ makedepends="devicepkg-dev"
 source="
 	deviceinfo
 	phoc.ini
-        q6voiced.conf
+	q6voiced.conf
 "
 subpackages="
 	$pkgname-nonfree-firmware:nonfree_firmware
@@ -40,7 +43,7 @@ nonfree_firmware() {
         soc-qcom-sdm845-modem"
 	mkdir "$subpkgdir"
 
-	install -Dm644 q6voiced.conf "$subpkgdir"/etc/conf.d/q6voiced
+	install -Dm644 "$srcdir"/q6voiced.conf "$subpkgdir"/etc/conf.d/q6voiced
 }
 
 phosh() {
