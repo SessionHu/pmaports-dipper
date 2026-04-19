@@ -3,9 +3,9 @@
 # Stable Linux kernel with patches for SDM845 devices
 # Kernel config based on: arch/arm64/configs/defconfig and sdm845.config
 
-_flavor="postmarketos-qcom-sdm845"
+_flavor="postmarketos-qcom-sdm845-dipper"
 pkgname=linux-$_flavor
-pkgver=6.11.x-dipper
+pkgver=6.11.0
 pkgrel=1
 pkgdesc="Mainline Kernel fork for SDM845 devices"
 arch="aarch64"
@@ -71,6 +71,6 @@ package() {
 }
 
 sha512sums="
-40a127d280404c61f3c87692b85de6270144f98109b6e026649629e50c8e52a6a067d7f841cbbba6337791b115620894f205016a0dce46e65f9b95bcccff793a  linux-sdm845-6.11.tar.gz
-98b9bf6313079676dd8289a5f7fa79b3ff827e66894683cc2a3f39a2d6905514c9512ead4c8e7681f319fc6d140bf8145a721087fef6558b7fc3bf391eba8506  config-postmarketos-qcom-sdm845.aarch64
+a31d3c780b5677b9a6f7837f8d32092c6170ed569fd3125f6d564d92a22b1611b44f5c8ec2da99789fc9250962741e51848dbe825898aab55809301907cac78b  linux-sdm845-6.11-dipper.tar.gz
+98b9bf6313079676dd8289a5f7fa79b3ff827e66894683cc2a3f39a2d6905514c9512ead4c8e7681f319fc6d140bf8145a721087fef6558b7fc3bf391eba8506  config-postmarketos-qcom-sdm845-dipper.aarch64
 "
