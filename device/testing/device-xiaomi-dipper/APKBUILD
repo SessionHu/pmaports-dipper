@@ -8,7 +8,7 @@ license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	linux-postmarketos-qcom-sdm845
+	linux-postmarketos-qcom-sdm845-dipper
 	mkbootimg
 	postmarketos-base
 	postmarketos-update-kernel
