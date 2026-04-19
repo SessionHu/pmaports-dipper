@@ -122,3 +122,5 @@ ENV/
 
 # child pipeline
 .ci/build-jobs.yaml
+
+pmbootstrap
