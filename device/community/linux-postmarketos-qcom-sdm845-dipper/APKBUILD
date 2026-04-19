@@ -1,0 +1,76 @@
+# Maintainer: Caleb Connolly <caleb@connolly.tech>
+# Co-Maintainer: Joel Selvaraj <joelselvaraj.oss@gmail.com>
+# Stable Linux kernel with patches for SDM845 devices
+# Kernel config based on: arch/arm64/configs/defconfig and sdm845.config
+
+_flavor="postmarketos-qcom-sdm845"
+pkgname=linux-$_flavor
+pkgver=6.11.x-dipper
+pkgrel=1
+pkgdesc="Mainline Kernel fork for SDM845 devices"
+arch="aarch64"
+_carch="arm64"
+url="https://gitlab.com/Akitlove/linux"
+license="GPL-2.0-only"
+options="!check !tracedeps
+	pmb:cross-native
+	pmb:kconfigcheck-community"
+makedepends="bash bison findutils flex installkernel openssl-dev perl zstd python3"
+
+_config="config-$_flavor.$arch"
+_tag="sdm845-6.11-dipper"
+
+# Source
+source="
+	linux-$_tag.tar.gz::https://gitlab.com/Akitlove/linux/-/archive/sdm845/6.11-dipper/linux-sdm845-6.11-dipper.tar.gz
+	$_config
+"
+builddir="$srcdir/linux-$_tag"
+
+prepare() {
+	default_prepare
+	cp "$srcdir/config-$_flavor.$arch" .config
+}
+
+build() {
+	unset LDFLAGS
+	make ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+}
+
+package() {
+	if [ -e "$builddir/arch/$_carch/boot/vmlinuz.efi" ]; then
+		# ZBOOT EFI decompressor for EFI booting
+		install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz.efi" \
+			"$pkgdir/boot/linux.efi"
+
+		# Old GZIP'd kernel image for boot.img compatibility
+		install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz" \
+			"$pkgdir/boot/vmlinuz"
+	else
+		echo "WARNING: CONFIG_ZBOOT not enabled!"
+		install -Dm644 "$builddir/arch/$_carch/boot/Image.gz" \
+			"$pkgdir/boot/vmlinuz"
+	fi
+
+	make modules_install dtbs_install \
+		ARCH="$_carch" \
+		INSTALL_PATH="$pkgdir"/boot/ \
+		INSTALL_MOD_PATH="$pkgdir" \
+		INSTALL_MOD_STRIP=1 \
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs-tmp
+
+	mkdir -p "$pkgdir"/boot/dtbs/qcom
+	cp -r "$pkgdir"/boot/dtbs-tmp/qcom/sdm8* "$pkgdir"/boot/dtbs/qcom
+	rm -rf "$pkgdir"/boot/dtbs-tmp
+
+	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
+
+	install -D "$builddir"/include/config/kernel.release \
+		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
+}
+
+sha512sums="
+40a127d280404c61f3c87692b85de6270144f98109b6e026649629e50c8e52a6a067d7f841cbbba6337791b115620894f205016a0dce46e65f9b95bcccff793a  linux-sdm845-6.11.tar.gz
+98b9bf6313079676dd8289a5f7fa79b3ff827e66894683cc2a3f39a2d6905514c9512ead4c8e7681f319fc6d140bf8145a721087fef6558b7fc3bf391eba8506  config-postmarketos-qcom-sdm845.aarch64
+"
