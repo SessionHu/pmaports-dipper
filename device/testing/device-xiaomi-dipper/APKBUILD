@@ -15,8 +15,6 @@ depends="
 	soc-qcom
 	soc-qcom-modem
 	soc-qcom-pd-mapper
-	soc-qcom-sdm845
-	soc-qcom-sdm845-ucm
 "
 makedepends="devicepkg-dev"
 source="
@@ -39,8 +37,7 @@ package() {
 
 nonfree_firmware() {
 	pkgdesc="GPU, venus, modem firmware"
-	depends="firmware-xiaomi-dipper soc-qcom-sdm845-nonfree-firmware
-        soc-qcom-sdm845-modem"
+	depends="firmware-xiaomi-dipper soc-qcom-modem"
 	mkdir "$subpkgdir"
 
 	install -Dm644 "$srcdir"/q6voiced.conf "$subpkgdir"/etc/conf.d/q6voiced
